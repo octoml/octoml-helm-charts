@@ -26,6 +26,8 @@ imageCredentials:
   password:
   email:
 
+#test
+
 prometheus:
   enabled: true
   metricsPort: 8002
