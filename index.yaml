@@ -1,0 +1,12 @@
+apiVersion: v1
+entries:
+  octoml-triton:
+  - apiVersion: v2
+    created: "2022-08-01T19:49:09.807653893Z"
+    description: A Helm chart for OctoML Triton deployments
+    digest: bfc9e3195fff738de30e4e801b866a79a13bd3b66add2f65a3587de394476248
+    name: octoml-triton
+    urls:
+    - https://github.com/octoml/octoml-helm-charts/releases/download/octoml-triton-0.4.0/octoml-triton-0.4.0.tgz
+    version: 0.4.0
+generated: "2022-08-01T19:49:09.807658293Z"
