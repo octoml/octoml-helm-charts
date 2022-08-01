@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Release.Name }}
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+      {{- if and .Values.prometheus.enabled (not .Values.prometheus.serviceMonitor.enabled) }}
+      annotations:
+        prometheus.io/path: "/metrics"
+        prometheus.io/scrape: "true"
+        prometheus.io/port: {{ .Values.prometheus.metricsPort | quote }}
+      {{- end }}
+    spec:
+      containers:
+      - name: {{ .Release.Name }}
+        command:
+        - tritonserver
+        args:
+        - --model-repository=octoml/models
+        - --strict-model-config=false
+        - --metrics-port={{ .Values.prometheus.metricsPort }}
+        image: "{{ .Values.imageName}}:{{ .Values.imageTag }}"
+        ports:
+        - containerPort: {{ .Values.grpcPort }}
+          protocol: TCP
+        - containerPort: {{ .Values.httpPort }}
+          protocol: TCP
+        - containerPort: {{ .Values.prometheus.metricsPort }}
+          protocol: TCP
+      {{- if .Values.imagePullSecret }}
+      imagePullSecrets:
+      - name: {{ .Values.imagePullSecret }}
+      {{- end }}
+      {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 6 }}
+      {{- end }}
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml .Values.nodeSelector | indent 8 }}
+      {{- end }}
