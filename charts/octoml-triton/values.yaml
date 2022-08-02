@@ -12,8 +12,15 @@ imagePullSecret: regcred
 imageName:
 imageTag: latest
 
-# Hostname for the ingress
-hostname:
+# Parameters for ingress
+ingress:
+  enabled: false
+  annotations: {}
+#  ingressClassName:
+#  grpc:
+#    host:
+#  http:
+#    host:
 
 # Service parameters
 service:
