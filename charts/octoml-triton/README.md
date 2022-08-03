@@ -41,6 +41,11 @@ helm upgrade [RELEASE_NAME] [CHART] --install
 | httpPort | int | 8000 | Port on Triton pods exposing HTTP endpoint
 | imagePullSecret | string | regcred | Name of the image pull secret used to pull the Triton pod image
 | imageName | string |
+| ingress.enabled | bool | false | Whether to create ingress resources
+| ingress.annotations | object | {}
+| ingress.ingressClassName | string |
+| ingress.grpc.host | string |
+| ingress.http.host | string |
 | service.type | string | ClusterIP
 | imageCredentials.registry | string |
 | imageCredentials.username | string |
